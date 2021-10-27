@@ -16,8 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from aplicaciones.principal.views import inicio
+from aplicaciones.camera import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', inicio,name='index')
+    #path('', inicio,name='index'),
+    path('camera/',views.camera,name='video_feed'),
+    path('foto/',views.foto,name='foto'),
+    # path('webcam_feed', views.webcam_feed, name='webcam_feed'),
+    # path('mask_feed', views.mask_feed, name='mask_feed'),
 ]
