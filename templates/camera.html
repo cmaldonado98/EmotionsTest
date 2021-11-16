@@ -117,7 +117,7 @@
         dataurl_container.style.display = "block";
 
         //CONSUMO API
-        fetch( urlapi + "/imagenes", {
+        fetch(urlapi + "/imagenes", {
           method: "POST",
           // mode: 'no-cors',
           body: JSON.stringify({
@@ -130,41 +130,46 @@
         })
           .then((response) => response.json())
           .then((json) => console.log(json));
-        
       });
+
       //BOTON ANALIZAR ENVIO AWS
       send_button.addEventListener("click", function () {
-        canvas
-          .getContext("2d")
-          .drawImage(video, 0, 0, canvas.width, canvas.height);
-        let image_data_url = canvas.toDataURL("image/jpeg");
-        canvas.drawImage;
+        let i = 0;
+        do {
+          canvas
+            .getContext("2d")
+            .drawImage(video, 0, 0, canvas.width, canvas.height);
+          let image_data_url = canvas.toDataURL("image/jpeg");
+          canvas.drawImage;
 
-        //CONSUMO API ANALIZAR IMG
-        fetch(urlapi + "/emotionsaws", {
-          method: "POST",
-          // mode: 'no-cors',
-          body: JSON.stringify({
-            base64: image_data_url,
-            testId: "testIdXDjaja",
-          }),
-          headers: {
-            "Content-type": "application/json",
-          },
-        })
-          .then((response) => response.json())
-          .then((json) => dataurl.value = json)
-          .then((json) => dataurl_container.style.display = "block");
+          //CONSUMO API ANALIZAR IMG
+          fetch(urlapi + "/emotionsaws", {
+            method: "POST",
+            //mode: 'no-cors',
+            body: JSON.stringify({
+              base64: image_data_url,
+              testId: "testIdXDjaja",
+            }),
+            headers: {
+              "Content-type": "application/json",
+            },
+          })
+            .then((response) => response.json())
+            .then((json) => (dataurl.value = json))
+            .then((json) => (dataurl_container.style.display = "block"));
 
+          i += 1;
+          const yourFunction = async () => {
+            await delay(1000);
+          };
+
+          yourFunction();
+          
+        } while (i < 5);
 
         // dataurl.value = json;
         // dataurl_container.style.display = "block";
-
-        
-        
       });
-
-      
     </script>
   </body>
 </html>

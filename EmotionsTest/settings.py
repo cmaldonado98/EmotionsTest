@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-$de*w-$!tjk+)4y@oamco9$us5ofdf06=j4fpl60**yby6=1c3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["20.118.216.41","test.inconstruccion.com"]
+ALLOWED_HOSTS = ["20.118.216.41","test.inconstruccion.com","127.0.0.1"]
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'aplicaciones.camera',
+    'aplicaciones.persona',
 ]
 
 MIDDLEWARE = [
@@ -76,8 +77,12 @@ WSGI_APPLICATION = 'EmotionsTest.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'EmotionsTest',
+        'USER': 'postgres',
+        'PASSWORD': 'admin',
+        'HOST': '20.118.32.177',
+        'DATABASE_PORT': '5432',
     }
 }
 

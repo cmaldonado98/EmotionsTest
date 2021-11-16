@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from aplicaciones.camera import views
+from aplicaciones.persona.views import crearPersona
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', views.foto,name='foto'),       
+    path("admin/", admin.site.urls),
+    path("", views.foto, name="foto"),
+    path("persona/", crearPersona, name="crearPersona"),
 ]
