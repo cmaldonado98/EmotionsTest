@@ -5,5 +5,6 @@ from django.http.response import StreamingHttpResponse
 
 
 
-def foto(request):
-	return render(request, 'camera.html')
+def foto(request):	
+	id = request.session['valor']
+	return render(request, 'camera.html',{'valor':id})

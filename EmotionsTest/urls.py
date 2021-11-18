@@ -20,6 +20,6 @@ from aplicaciones.persona.views import crearPersona
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", views.foto, name="foto"),
-    path("persona/", crearPersona, name="crearPersona"),
+    path("camera/", views.foto, name="foto"),
+    path("", crearPersona, name="crearPersona"),
 ]
