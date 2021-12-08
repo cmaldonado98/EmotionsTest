@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-$de*w-$!tjk+)4y@oamco9$us5ofdf06=j4fpl60**yby6=1c3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["20.118.216.41","test.inconstruccion.com","127.0.0.1"]
+ALLOWED_HOSTS = ["20.118.216.41","test.inconstruccion.com","127.0.0.1","test.superfoodproteins.com"]
 
 
 # Application definition
@@ -85,7 +85,7 @@ DATABASES = {
         'NAME': 'EmotionsTest',
         'USER': 'postgres',
         'PASSWORD': 'admin',
-        'HOST': '20.118.32.177',
+        'HOST': '3.231.107.187',
         'DATABASE_PORT': '5432',
     }
 }
