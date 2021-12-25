@@ -30,7 +30,9 @@
       id="mainNav"
     >
       <div class="container px-4">
-        <a class="navbar-brand" href="#page-top">Emotions Test</a>
+        <a class="navbar-brand" href="https://superfoodproteins.com"
+          >Emotions Test</a
+        >
         <button
           class="navbar-toggler"
           type="button"
@@ -68,16 +70,127 @@
             <button id="start-camera" class="btn btn-primary">
               Start Camera
             </button>
-            <video id="video" autoplay="" width="720" height="640"></video>
-            <button id="click-photo" class="btn btn-primary">Tomar foto</button>
-            <br>
-            <button id="click-send" class="btn btn-primary">Analizar</button>
-            <div id="dataurl-container">
-              <canvas id="canvas" width="520" height="400"></canvas>
-              <div id="dataurl-header">Imagen en Base64</div>
-              <textarea id="dataurl" readonly=""></textarea>
+            <div class="contador">
+              <div class="color_fondo" id="color_fondo"></div>
+              <h1 class="numero" id="numero"></h1>
             </div>
-            <script src="{% static 'js/camera.js' %}"></script>
+            <video id="video" autoplay="" width="920" height="840"></video>
+            <br />
+            <button id="click-send" class="btn btn-primary">
+              Empezar test
+            </button>
+            <br />
+            <a href="{% url 'resultado' valor %}">
+            <button
+              id="click-result"
+              class="btn btn-secondary">
+              Procesar
+            </button>
+          </a>
+            <div id="dataurl-container">
+              <canvas id="canvas" width="720" height="600"></canvas>
+            </div>
+
+            <script>
+              //VARIABLES
+              let camera_button = document.querySelector("#start-camera");
+              let send_button = document.querySelector("#click-send");
+              let result_button = document.querySelector("#click-result");
+              let video = document.querySelector("#video");
+              let canvas = document.querySelector("#canvas");
+              let urlapi = "https://api.superfoodproteins.com";
+              var numTest = "{{valor}}";
+              // CAMARA
+              camera_button.addEventListener("click", async function () {
+                let stream = null;
+
+                try {
+                  stream = await navigator.mediaDevices.getUserMedia({
+                    video: true,
+                    audio: false,
+                  });
+                } catch (error) {
+                  alert(error.message);
+                  return;
+                }
+
+                video.srcObject = stream;
+                video.style.display = "block";
+                send_button.style.display = "block";
+                result_button.style.display = "block";
+              });
+
+              //BOTON ANALIZAR ENVIO AWS
+              send_button.addEventListener("click", function () {
+                var count = 0;
+                var analizarImg = setInterval(function () {
+                  if (count <= 4) {
+                    count++;
+                    canvas
+                      .getContext("2d")
+                      .drawImage(video, 0, 0, canvas.width, canvas.height);
+                    let image_data_url = canvas.toDataURL("image/jpeg");
+                    canvas.drawImage;
+
+                    //CONSUMO API ANALIZAR IMG
+                    fetch(urlapi + "/emotionsaws", {
+                      method: "POST",
+                      //mode: 'no-cors',
+                      body: JSON.stringify({
+                        base64: image_data_url,
+                        testId: numTest.toString(),
+                      }),
+                      headers: {
+                        "Content-type": "application/json",
+                      },
+                    }).then((response) => response.json());
+                  } else {
+                    clearInterval(analizarImg);
+                  }
+                }, 1000);
+
+                const color = document.getElementById("color_fondo");
+                const numero = document.getElementById("numero");
+                let cantidad = 0;
+                let tiempo = setInterval(() => {
+                  cantidad += 1;
+                  color.style.height = `${cantidad}%`;
+                  numero.textContent = cantidad;
+                  if (cantidad === 5) {
+                    clearInterval(tiempo);
+                  }
+                }, 1000);
+              });
+
+              //TEMPLATE
+
+              window.addEventListener("DOMContentLoaded", (event) => {
+                // Activate Bootstrap scrollspy on the main nav element
+                const mainNav = document.body.querySelector("#mainNav");
+                if (mainNav) {
+                  new bootstrap.ScrollSpy(document.body, {
+                    target: "#mainNav",
+                    offset: 74,
+                  });
+                }
+
+                // Collapse responsive navbar when toggler is visible
+                const navbarToggler =
+                  document.body.querySelector(".navbar-toggler");
+                const responsiveNavItems = [].slice.call(
+                  document.querySelectorAll("#navbarResponsive .nav-link")
+                );
+                responsiveNavItems.map(function (responsiveNavItem) {
+                  responsiveNavItem.addEventListener("click", () => {
+                    if (
+                      window.getComputedStyle(navbarToggler).display !== "none"
+                    ) {
+                      navbarToggler.click();
+                    }
+                  });
+                });
+              });
+            </script>
           </div>
         </div>
       </div>
@@ -93,6 +206,5 @@
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
-    <script src="{% static 'js/camera.js' %}"></script>
   </body>
 </html>

@@ -7,7 +7,7 @@ let canvas = document.querySelector("#canvas");
 let dataurl = document.querySelector("#dataurl");
 let dataurl_container = document.querySelector("#dataurl-container  ");
 let urlapi = "https://api.superfoodproteins.com";
-var numTest = "{{valor}}";
+//var numTest = "{{valor}}";
 // CAMARA
 camera_button.addEventListener("click", async function () {
   let stream = null;

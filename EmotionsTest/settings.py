@@ -85,7 +85,7 @@ DATABASES = {
         'NAME': 'EmotionsTest',
         'USER': 'postgres',
         'PASSWORD': 'admin',
-        'HOST': '3.231.107.187',
+        'HOST': '34.236.249.184',
         'DATABASE_PORT': '5432',
     }
 }

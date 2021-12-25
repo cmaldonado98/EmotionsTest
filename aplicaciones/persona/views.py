@@ -21,4 +21,4 @@ def crearPersona(request):
             id = form.instance.pk            
             request.session['valor'] = id            
             return redirect('foto')
-    return render(request, 'personaForm.html',contexto)
+    return render(request, 'personaForm.html', contexto)

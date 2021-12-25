@@ -1,0 +1,119 @@
+{% load static %} {% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resultados</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <h1>RESULTADOS</h1>
+    <h2>{{persona.id}}</h2>
+    <h3>{{persona.nombre}}</h3>
+    <h4>{{persona.apellido}}</h4>
+    <h4>{{persona.correo}}</h4>
+
+    <div class="container my-5 text-center">
+      <button class="btn btn-primary w-100" onclick="traer()">Obtener</button>
+      <h1></h1>
+      <a id="download_xlsx" href="#"
+        ><button class="btn btn-success w-100">
+          Export Table Data To Excel File
+        </button>
+      </a>
+      <h1></h1>
+      <a id="download_xls" download="filename.xls" href="#"
+        ><button class="btn btn-success w-100">
+          Export Table Data To XLS File
+        </button>
+      </a>
+      <h1></h1>
+      <a id="download_csv" download="filename.csv" href="#"
+        ><button class="btn btn-success w-100">
+          Export Table Data To CSV File
+        </button>
+      </a>
+
+      <div class="mt-5">
+        <table class="table" id="tblData">
+          <thead>
+            <tr>
+              <th scope="col"># Test</th>
+              <th scope="col">ID Imagen</th>
+              <th scope="col">Resultado</th>
+              <th scope="col">Tiempo</th>
+            </tr>
+          </thead>
+          <tbody id="contenido"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <script>
+      //VARIABLES
+      let urlapi = "https://api.superfoodproteins.com";
+      var numTest = "{{persona.id}}";
+      var contenido = document.querySelector("#contenido");
+
+      function traer() {
+        fetch(urlapi + "/resultadosID/" + numTest.toString(), {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((datos) => {
+            //console.log(datos)
+            tabla(datos);
+          });
+      }
+
+      function tabla(datos) {
+        //console.log(datos)
+        contenido.innerHTML = "";
+        for (let valor of datos) {
+          contenido.innerHTML += `
+              <tr>
+                <th scope="row">${valor.testId}</th>
+                <td>${valor.idImg}</td>
+                <td>${valor.resultado}</td>
+                <td>${valor.tiempo}</td>
+              </tr>              
+              `;
+        }
+      }
+    </script>
+
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/excellentexport@3.4.3/dist/excellentexport.min.js"
+    ></script>
+    <script>
+      let download_xls = document.querySelector("#download_xls");
+      download_xls.addEventListener("click", () => {
+        ExcellentExport.excel(download_xls, "tblData");
+      });
+
+      let download_csv = document.querySelector("#download_csv");
+      download_csv.addEventListener("click", () => {
+        ExcellentExport.csv(download_csv, "tblData");
+      });
+
+      let download_xlsx = document.querySelector("#download_xlsx");
+      download_xlsx.addEventListener("click", () => {
+        ExcellentExport.convert(
+          { anchor: download_xlsx, filename: "filename", format: "xlsx" },
+          [{ name: "Sheet Name Here 1", from: { table: "tblData" } }]
+        );
+      });
+    </script>
+  </body>
+</html>
