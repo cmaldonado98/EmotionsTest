@@ -43,14 +43,20 @@ function render(obj) {
             const minutes = pad(parseInt(differTime / 60, 10));
 
             content.innerHTML += `
-          <tr style="--bs-table-striped-bg: rgba(var(--bs-primary-rgb), .25);">
-              <td>${x.testId}</td>
-              <td>${x.idImg}</td>
-              <td>${name}: ${parseInt(value)}%</td>
-              <td>${minutes}:${seconds}</td>
-              <td>Pregunta ${index + 1}</td>
-          </tr>
-        `;
+                <tr style="--bs-table-striped-bg: rgba(var(--bs-primary-rgb), .25);">
+                    <td>${x.testId}</td>
+                    <td>${x.idImg}</td>
+                    <td>${name}: ${parseInt(value)}%</td>
+                    <td>${minutes}:${seconds}</td>
+                    <td>Pregunta ${index + 1}</td>
+                    <td>
+                        <select class="bg-transparent w-100 border-primary">
+                            <option value="Si" selected>Si</option>
+                            <option value="No">No</option>
+                        </select>
+                    </td>
+                </tr>
+            `;
         });
 
     });
@@ -73,26 +79,54 @@ function getData() {
         .finally(() => Notiflix.Loading.remove());
 }
 
-function downloadDocument(ev, type) {
-    if (type === 'excel') {
-        return ExcellentExport.excel(ev.target, 'tblData');
+function prepareTableToExport(revert = false) {
+    const comboboxSection = document.querySelectorAll('#tblData td:last-child');
+
+    if (!revert) {
+        comboboxSection.forEach(tr => {
+            const combobox = tr.querySelector('select');
+            tr.innerHTML = combobox.value;
+        });
+        return;
     }
 
-    if (type === 'xls') {
-        return ExcellentExport.convert({
+    comboboxSection.forEach(tr => {
+        const value = tr.innerText;
+        tr.innerHTML = `
+            <select class="bg-transparent w-100 border-primary">
+                <option value="Si" ${value === 'Si' ? 'selected' : ''}>
+                    Si
+                </option>
+                <option value="No" ${value === 'No' ? 'selected' : ''}>
+                    No
+                </option>
+            </select>
+        `;
+    });
+}
+
+function downloadDocument(ev, type) {
+    let doc;
+    prepareTableToExport();
+
+    if (type === 'excel') {
+        doc = ExcellentExport.excel(ev.target, 'tblData');
+    } else if (type === 'xls') {
+        doc = ExcellentExport.convert({
             anchor: ev.target,
-            filename: '{{ persona.nombre }}',
+            filename: 'data',
             format: 'xlsx'
         }, [{
-            name: '{{ persona.nombre }}',
+            name: 'data',
             from: { table: 'tblData' }
         }
         ]);
+    } else if (type === 'csv') {
+        doc = ExcellentExport.csv(ev.target, 'tblData');
     }
 
-    if (type === 'csv') {
-        ExcellentExport.csv(ev.target, 'tblData');
-    }
+    prepareTableToExport(true);
+    return doc;
 }
 
 window.onload = () => setTimeout(() => Notiflix.Loading.remove(), 800);

@@ -48,13 +48,18 @@ const questionsOpts = [
   "Excelente"
 ];
 
+const startBtn = document.querySelector('#startBtn');
+
 function startCam() {
   const cameraContainer = document.querySelector('#camera-container');
   const cameraStream = document.querySelector('#camera-video');
-  const buttonContainer = document.querySelector('#action-buttons');
 
   navigator.mediaDevices?.getUserMedia({
-    video: { facingMode: "user" },
+    video: {
+      facingMode: "user",
+      width: { min: 1280 },
+      height: { min: 720 }
+    },
     audio: false
   })
     .then(stream => {
@@ -62,8 +67,8 @@ function startCam() {
       // Remove active camera button
       cameraContainer.firstElementChild.remove();
       //
-      // Show 'Empezar' and 'Procesar' buittons
-      buttonContainer.style.display = 'flex';
+      // Show 'Empezar'
+      startBtn.style.display = 'block';
       //
     })
     .catch(() => Notiflix.Notify.failure('No es posible activa la cámara'))
@@ -74,8 +79,11 @@ function getImage() {
   const canvas = document.createElement('canvas');
   const video = document.querySelector('video');
 
+  canvas.width = 1280;
+  canvas.height = 720;
+
   canvas.getContext("2d")
-    .drawImage(video, 0, 0, 720, 600);
+    .drawImage(video, 0, 0, 1280, 720);
 
   const img = canvas.toDataURL("image/jpeg");
   return img;
@@ -99,6 +107,7 @@ async function sendData(img) {
 
 function onStart() {
   let counter = 0;
+  startBtn.disabled = true;
 
   const clock = setInterval(() => {
     if (counter < 50) {
@@ -124,6 +133,7 @@ function onStart() {
     }
 
     counter = 0;
+    document.querySelector('#processBtn').style.display = 'block';
     clearInterval(clock);
   }, 1000);
 }
