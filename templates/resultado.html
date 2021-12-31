@@ -1,119 +1,170 @@
 {% load static %} {% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Resultados</title>
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
-  </head>
-  <body>
-    <h1>RESULTADOS</h1>
-    <h2>{{persona.id}}</h2>
-    <h3>{{persona.nombre}}</h3>
-    <h4>{{persona.apellido}}</h4>
-    <h4>{{persona.correo}}</h4>
 
-    <div class="container my-5 text-center">
-      <button class="btn btn-primary w-100" onclick="traer()">Obtener</button>
-      <h1></h1>
-      <a id="download_xlsx" href="#"
-        ><button class="btn btn-success w-100">
-          Export Table Data To Excel File
-        </button>
-      </a>
-      <h1></h1>
-      <a id="download_xls" download="filename.xls" href="#"
-        ><button class="btn btn-success w-100">
-          Export Table Data To XLS File
-        </button>
-      </a>
-      <h1></h1>
-      <a id="download_csv" download="filename.csv" href="#"
-        ><button class="btn btn-success w-100">
-          Export Table Data To CSV File
-        </button>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emotions Test</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+  <!-- Notiflix -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notiflix@3.2.2/dist/notiflix-3.2.2.min.css">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light border-bottom border-light py-0">
+    <div class="container-fluid">
+      <a href="https://superfoodproteins.com" class="navbar-brand">
+        <img src="{% static 'img/LOGO_PROTEINS.png' %}" alt="Logo" style="width: 7rem; height: 3.5rem;">
       </a>
 
-      <div class="mt-5">
-        <table class="table" id="tblData">
-          <thead>
-            <tr>
-              <th scope="col"># Test</th>
-              <th scope="col">ID Imagen</th>
-              <th scope="col">Resultado</th>
-              <th scope="col">Tiempo</th>
-            </tr>
-          </thead>
-          <tbody id="contenido"></tbody>
-        </table>
+      <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="bi bi-grid fs-3"></i>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav align-items-center ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active">
+              About
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link">
+              Services
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link">
+              Contact
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'foto' %}">
+              <button class="btn btn-primary rounded-pill">
+                <span class="text-white">Tomar foto</span>
+              </button>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="row justify-content-between align-items-center mt-5">
+      <div class="col-auto">
+        <h1 class="mb-0">Datos del usuario</h1>
+      </div>
+
+      <div class="col-auto">
+        <h5 class="mb-0">Resultado {{ persona.id }}</h5>
       </div>
     </div>
 
-    <script>
-      //VARIABLES
-      let urlapi = "https://api.superfoodproteins.com";
-      var numTest = "{{persona.id}}";
-      var contenido = document.querySelector("#contenido");
+    <div class="row mt-3">
+      <div class="col-12">
+        <h6 class="text-dark">
+          {{ persona.nombre }} {{ persona.apellido }}
+        </h6>
+        <span class="text-muted">
+          {{ persona.correo }}
+        </span>
+      </div>
+    </div>
 
-      function traer() {
-        fetch(urlapi + "/resultadosID/" + numTest.toString(), {
-          method: "GET",
-          headers: {
-            "Content-type": "application/json",
-          },
-        })
-          .then((response) => response.json())
-          .then((datos) => {
-            //console.log(datos)
-            tabla(datos);
-          });
-      }
+    <div class="row justify-content-between align-items-center mt-4">
+      <div class="col-auto">
+        <button class="btn btn-primary rounded-pill py-2 px-3" onclick="getData()">
+          <span class="text-white">
+            Obtener
+          </span>
+        </button>
+      </div>
 
-      function tabla(datos) {
-        //console.log(datos)
-        contenido.innerHTML = "";
-        for (let valor of datos) {
-          contenido.innerHTML += `
-              <tr>
-                <th scope="row">${valor.testId}</th>
-                <td>${valor.idImg}</td>
-                <td>${valor.resultado}</td>
-                <td>${valor.tiempo}</td>
-              </tr>              
-              `;
-        }
-      }
+      <div class="col-auto">
+        <div class="dropdown">
+          <button class="btn btn-primary rounded-pill py-2 px-3 dropdown-toggle text-white" type="button" id="exportar"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            <span>Exportar</span>
+          </button>
+
+          <ul class="dropdown-menu" aria-labelledby="exportar">
+            <li>
+              <a class="dropdown-item" download="datos" href="#" onclick="downloadDocument(event, 'excel')">
+                Excel file
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" download="datos" href="#" onclick="downloadDocument(event, 'xls')">
+                XLS File
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" download="datos" href="#" onclick="downloadDocument(event, 'csv')">
+                CVS File
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-body p-0 shadow-sm mt-4 mb-5 mx-lg-5 ">
+          <div class="table-responsive">
+            <table class="table table-bordered border-primary table-striped text-center mb-0" id="tblData">
+              <thead>
+                <tr class="border-bottom border-primary">
+                  <th># Test</th>
+                  <th>Cod. Imagen</th>
+                  <th>Resultado</th>
+                  <th>Tiempo</th>
+                  <th>Pregunta</th>
+                </tr>
+              </thead>
+
+              <tbody class="border-top-0">
+                <tr style="--bs-table-striped-bg: rgba(var(--bs-primary-rgb), .25);">
+                  <td colspan="99">
+                    <h6 class="text-warning text-center">
+                      Presiona obtener para buscar
+                    </h6>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/excellentexport@3.4.3/dist/excellentexport.min.js">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+    integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
+    </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+    integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
     </script>
 
-    <script
-      type="text/javascript"
-      src="https://cdn.jsdelivr.net/npm/excellentexport@3.4.3/dist/excellentexport.min.js"
-    ></script>
-    <script>
-      let download_xls = document.querySelector("#download_xls");
-      download_xls.addEventListener("click", () => {
-        ExcellentExport.excel(download_xls, "tblData");
-      });
+  <!-- Notiflix -->
+  <script src="https://cdn.jsdelivr.net/npm/notiflix@3.2.2/dist/notiflix-aio-3.2.2.min.js"></script>
 
-      let download_csv = document.querySelector("#download_csv");
-      download_csv.addEventListener("click", () => {
-        ExcellentExport.csv(download_csv, "tblData");
-      });
+  <script>
+    window.personaId = "{{ persona.id }}";
+  </script>
 
-      let download_xlsx = document.querySelector("#download_xlsx");
-      download_xlsx.addEventListener("click", () => {
-        ExcellentExport.convert(
-          { anchor: download_xlsx, filename: "filename", format: "xlsx" },
-          [{ name: "Sheet Name Here 1", from: { table: "tblData" } }]
-        );
-      });
-    </script>
-  </body>
+  <script src="{% static 'js/resultado.js' %}"></script>
+</body>
+
 </html>
