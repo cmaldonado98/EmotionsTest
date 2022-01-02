@@ -23,25 +23,11 @@ function render(obj) {
         return;
     }
 
-    const map = new Map();
-
-    obj.forEach(x => {
-        const n = map.get(x.pregunta);
-
-        if (!n) {
-            x.images = 1;
-            map.set(x.pregunta, x);
-            return;
-        }
-
-        n.images = n.images + 1;
-    });
-
-    map.forEach((x) => {
+    obj.forEach((x) => {
         content.innerHTML += `
             <tr style="--bs-table-striped-bg: rgba(var(--bs-primary-rgb), .25);">
                 <td>${x.testId}</td>
-                <td>${x.images}</td>
+                <td>${x.idImg}</td>
                 <td>${x.resultado}</td>
                 <td>${x.tiempo}</td>
                 <td>${x.calificacion}</td>

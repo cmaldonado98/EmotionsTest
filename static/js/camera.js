@@ -137,12 +137,13 @@ function onStart() {
 
       // Update timer
       setTimer(counter, (counter / 12) * 60);
-      //
-      counter++;
 
-      if (counter === 61) {
+      if (activeQuestion === 5) {
         return;
       }
+
+      //
+      counter++;
 
       // Send request
       const img = getImage();
