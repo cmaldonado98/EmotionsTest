@@ -6,59 +6,39 @@ const urlApi = "https://api.superfoodproteins.com";
 const numTest = window.personaId;
 delete window.personaId;
 
-function pad(val) { return val > 9 ? val : '0' + val; }
-
 function render(obj) {
     const content = document.querySelector("tbody");
     content.innerHTML = ''; // Clear table
 
     if (!obj.length) {
         content.innerHTML = `
-        <tr style="--bs-table-striped-bg: rgba(var(--bs-primary-rgb), .25);">
-            <td colspan="99">
-                <h6 class="text-warning text-center">
-                    No se encontraron registros
-                </h6>
-            </td>
-        </tr>
+            <tr style="--bs-table-striped-bg: rgba(var(--bs-primary-rgb), .25);">
+                <td colspan="99">
+                    <h6 class="text-warning text-center">
+                        No se encontraron registros
+                    </h6>
+                </td>
+            </tr>
         `;
         return;
     }
 
-    let timerInit;
-
-    obj.forEach((x, index) => {
-        const deserialize = JSON.parse(x.resultado.replaceAll('\'', '"'));
-
-        if (index === 0) {
-            timerInit = x.tiempo;
-        }
-
-        [...deserialize].forEach(y => {
-            const [name, value] = y;
-            let differTime = Math.abs(new Date(timerInit).getTime() - new Date(x.tiempo).getTime());
-            differTime = Math.floor(differTime / 1000);
-
-            const seconds = pad(differTime % 60);
-            const minutes = pad(parseInt(differTime / 60, 10));
-
-            content.innerHTML += `
-                <tr style="--bs-table-striped-bg: rgba(var(--bs-primary-rgb), .25);">
-                    <td>${x.testId}</td>
-                    <td>${x.idImg}</td>
-                    <td>${name}: ${parseInt(value)}%</td>
-                    <td>${minutes}:${seconds}</td>
-                    <td>Pregunta ${index + 1}</td>
-                    <td>
-                        <select class="bg-transparent w-100 border-primary">
-                            <option value="Si" selected>Si</option>
-                            <option value="No">No</option>
-                        </select>
-                    </td>
-                </tr>
-            `;
-        });
-
+    obj.forEach((x) => {
+        content.innerHTML += `
+            <tr style="--bs-table-striped-bg: rgba(var(--bs-primary-rgb), .25);">
+                <td>${x.testId}</td>
+                <td>${x.idImg}</td>
+                <td>${x.resultado}</td>
+                <td>${x.tiempo}</td>
+                <td>${x.pregunta}</td>
+                <td>
+                    <select class="bg-transparent w-100 border-primary">
+                        <option value="Si" selected>Si</option>
+                        <option value="No">No</option>
+                    </select>
+                </td>
+            </tr>
+        `;
     });
 }
 
@@ -114,10 +94,10 @@ function downloadDocument(ev, type) {
     } else if (type === 'xls') {
         doc = ExcellentExport.convert({
             anchor: ev.target,
-            filename: 'data',
+            filename: 'datos',
             format: 'xlsx'
         }, [{
-            name: 'data',
+            name: 'datos',
             from: { table: 'tblData' }
         }
         ]);

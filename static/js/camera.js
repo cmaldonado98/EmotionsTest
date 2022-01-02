@@ -89,13 +89,15 @@ function getImage() {
   return img;
 }
 
-async function sendData(img) {
+async function sendData(img, tiempo, pregunta) {
   const response = await fetch(urlApi + "/emotionsaws", {
     method: "POST",
     // mode: 'no-cors',
     body: JSON.stringify({
       base64: img,
-      testId: numTest.toString()
+      testId: numTest.toString(),
+      tiempo,
+      pregunta: 'Pregunta ' + pregunta
     }),
     headers: {
       "Content-type": "application/json",
@@ -105,21 +107,31 @@ async function sendData(img) {
   return await response.json();
 }
 
+function pad(val) { return val > 9 ? val : '0' + val; }
+
+function getTime(timerInit, currentTime) {
+  let differTime = Math.abs(new Date(timerInit).getTime() - new Date(currentTime).getTime());
+  differTime = Math.floor(differTime / 1000);
+
+  const seconds = pad(differTime % 60);
+  const minutes = pad(parseInt(differTime / 60, 10));
+
+  return `${minutes}:${seconds}`;
+}
+
 function onStart() {
   let counter = 0;
+  const timerInit = new Date();
   startBtn.disabled = true;
 
   const clock = setInterval(() => {
     if (counter < 50) {
+      const img = getImage();
+      const pregunta = Math.floor(counter / 10) + 1;
+      const tiempo = getTime(timerInit, Date.now());
+      sendData(img, tiempo, pregunta);
 
       if (counter % 10 === 0) {
-        if (counter > 1) {
-          // Send request
-          const img = getImage();
-          sendData(img);
-          //
-        }
-
         // Select question based on time
         this.renderQuestion(counter / 10);
         //
