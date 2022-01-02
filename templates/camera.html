@@ -150,7 +150,7 @@
             Para empezar el test de emociones, por favor ubicarse en un lugar con suficiente luz, no usar gorros, gafas,
             bufandas u objetos que tapen su rostro. De click en el botón "Empezar" y mire a la cámara mientras prueba el
             producto y responda a las preguntas que se presentarán en la parte izquierda, cada pregunta tiene una
-            duración de 10 segundos. Una vez terminada las 5 preguntas, de click en el botón "Procesar" el cual le
+            duración de 12 segundos. Una vez terminada las 5 preguntas, de click en el botón "Procesar" el cual le
             llevará a la parte de los
             resultados de las emociones.
             <br><br>
@@ -166,6 +166,27 @@
               </button>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="processModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h5>
+            TEST Finalizado
+          </h5>
+
+          <p>
+            Para continuar de click en procesar
+          </p>
+
+          <a class="btn btn-dark ps-0" href="{% url 'resultado' valor %}">
+            <i class="bi bi-check-circle p-2 me-2 rounded-start text-white bg-black bg-opacity-10"></i>
+            <span class="text-white">Procesar</span>
+          </a>
         </div>
       </div>
     </div>

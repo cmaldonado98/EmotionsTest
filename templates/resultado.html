@@ -72,11 +72,14 @@
       <div class="col-12">
         <h6 class="text-dark">
           {{ persona.nombre }} {{ persona.apellido }}
-          {{ persona.sexo }} {{ persona.edad }}
+          &bull;&nbsp;{{ persona.edad }} años
         </h6>
-        <span class="text-muted">
+        <div class="text-muted">
           {{ persona.correo }}
-        </span>
+        </div>
+        <div class="text-muted">
+          {{ persona.sexo }}
+        </div>
       </div>
     </div>
 
@@ -125,9 +128,10 @@
               <thead>
                 <tr class="border-bottom border-primary">
                   <th># Test</th>
-                  <th>Cod. Imagen</th>
+                  <th>No° Imagen</th>
                   <th>Resultado</th>
                   <th>Tiempo</th>
+                  <th>Calificación</th>
                   <th>Pregunta</th>
                   <th>Validar</th>
                 </tr>

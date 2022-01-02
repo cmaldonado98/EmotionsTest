@@ -15,13 +15,13 @@ progressBar.style.strokeDashoffset = area;
 
 function pad(val) { return val > 9 ? val : '0' + val; }
 
-function setTimer(count) {
-  const seconds = pad(++count % 60);
+function setTimer(count, progress) {
+  const seconds = pad(count % 60);
   const minutes = pad(parseInt(count / 60, 10));
 
   progressValue.innerHTML = minutes + ':' + seconds;
 
-  const offset = area - ((area / 60) * seconds);
+  const offset = area - ((area / 60) * progress);
   progressBar.style.strokeDashoffset = offset;
 }
 //
@@ -89,7 +89,7 @@ function getImage() {
   return img;
 }
 
-async function sendData(img, tiempo, pregunta) {
+async function sendData(img, tiempo, pregunta, calificacion) {
   const response = await fetch(urlApi + "/emotionsaws", {
     method: "POST",
     // mode: 'no-cors',
@@ -97,7 +97,8 @@ async function sendData(img, tiempo, pregunta) {
       base64: img,
       testId: numTest.toString(),
       tiempo,
-      pregunta: 'Pregunta ' + pregunta
+      pregunta: 'Pregunta ' + pregunta,
+      calificacion
     }),
     headers: {
       "Content-type": "application/json",
@@ -122,30 +123,42 @@ function getTime(timerInit, currentTime) {
 function onStart() {
   let counter = 0;
   const timerInit = new Date();
+  let activeQuestion = 0;
   startBtn.disabled = true;
 
   const clock = setInterval(() => {
-    if (counter < 50) {
-      const img = getImage();
-      const pregunta = Math.floor(counter / 10) + 1;
-      const tiempo = getTime(timerInit, Date.now());
-      sendData(img, tiempo, pregunta);
-
-      if (counter % 10 === 0) {
+    if (activeQuestion < 5) {
+      if (counter % 12 === 0) {
         // Select question based on time
-        this.renderQuestion(counter / 10);
-        //
+        activeQuestion = (counter / 12) + activeQuestion;
+        renderQuestion(activeQuestion);
+        counter = 0;
       }
 
       // Update timer
-      setTimer(counter);
+      setTimer(counter, (counter / 12) * 60);
       //
       counter++;
+
+      if (counter === 61) {
+        return;
+      }
+
+      // Send request
+      const img = getImage();
+      const tiempo = getTime(timerInit, Date.now());
+      const check = [...document.querySelectorAll('input')]
+       .find(x => x.checked)?.value || 'NO SELECCIONADO';
+      sendData(img, tiempo, activeQuestion + 1, check);
+      //
       return;
     }
 
     counter = 0;
-    document.querySelector('#processBtn').style.display = 'block';
+    new bootstrap.Modal(document.getElementById('processModal'), {
+      keyboard: false,
+      backdrop: 'static'
+    }).show();
     clearInterval(clock);
   }, 1000);
 }
@@ -154,8 +167,19 @@ function renderQuestion(index) {
   const questionsContainer = document.querySelector('#questions-container');
   const currentQuestion = questions[index];
 
-  questionsContainer.innerHTML = `<strong>${currentQuestion}</strong>`;
-  questionsContainer.innerHTML += '<br />' + questionsOpts.join('<br />');
+  if (!currentQuestion) {
+    return questionsContainer.innerHTML = 'Sin preguntas';
+  }
+
+  questionsContainer.innerHTML = `<strong>${index + 1}. ${currentQuestion}</strong>`;
+  questionsContainer.innerHTML += questionsOpts.map((question, index) => (`
+    <div class="form-check mb-2">
+      <input class="form-check-input" type="radio" name="questions" id="rd${index}" value="${question}">
+      <label class="form-check-label" for="rd${index}">
+        ${question}
+      </label>
+    </div>
+  `)).join(' ');
 }
 
 window.onload = () => setTimeout(() => Notiflix.Loading.remove(), 800);
