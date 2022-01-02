@@ -57,15 +57,19 @@
                   <input type="label" name="nombre"> -->
                   {{form.nombre|as_crispy_field}}
                 </div>
-                <div class="field padding-bottom--24">                  
-                  <!-- <label for="label">{{form.apellido.label}}</label>                  
-                  <input type="label" name="apellido"> -->
+                <div class="field padding-bottom--24">
                   {{form.apellido|as_crispy_field}}
                 </div>
                 <div class="field padding-bottom--24">                  
-                  <!-- <label for="email">{{form.correo.label}}</label>                  
-                  <input type="email" name="password"> -->
+                  <!-- <label for="label">{{form.apellido.label}}</label>                  
+                  <input type="label" name="apellido"> -->
                   {{form.correo|as_crispy_field}}
+                </div>              
+                <div class="field padding-bottom--24">
+                  {{form.sexo|as_crispy_field}}
+                </div>
+                <div class="field padding-bottom--24">
+                  {{form.edad|as_crispy_field}}
                 </div>
                 <div class="field padding-bottom--24">
                   <input type="submit" name="submit" value="Continuar">
