@@ -24,41 +24,16 @@
         <img src="{% static 'img/LOGO_PROTEINS.png' %}" alt="Logo" style="width: 7rem; height: 3.5rem;">
       </a>
 
-      <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="collapse"
-        data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-        aria-label="Toggle navigation">
-        <i class="bi bi-grid fs-3"></i>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav align-items-center ms-auto">
-          <li class="nav-item">
-            <a class="nav-link active">
-              About
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link">
-              Services
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link">
-              Contact
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link">
-              <button class="btn btn-primary rounded-pill">
-                <span class="text-white">Tomar foto</span>
-              </button>
-            </a>
-          </li>
-        </ul>
-      </div>
+      <ul class="navbar-nav align-items-center ms-auto">
+        <li class="nav-item">
+          <a href="{% url 'crearPersona' %" class="btn btn-primary rounded-pill nav-link">
+            <span class="text-white">
+              <i class="bi bi-house"></i>
+              Inicio
+            </span>
+          </a>
+        </li>
+      </ul>
     </div>
   </nav>
 

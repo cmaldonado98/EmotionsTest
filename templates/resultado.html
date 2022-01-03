@@ -7,6 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Emotions Test</title>
+  <link rel="shortcut icon" href="{% static 'img/LOGO_PROTEINS.png' %}" type="image/x-icon">
   <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
   <!-- Notiflix -->
@@ -20,40 +21,16 @@
         <img src="{% static 'img/LOGO_PROTEINS.png' %}" alt="Logo" style="width: 7rem; height: 3.5rem;">
       </a>
 
-      <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <i class="bi bi-grid fs-3"></i>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav align-items-center ms-auto">
-          <li class="nav-item">
-            <a class="nav-link active">
-              About
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link">
-              Services
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link">
-              Contact
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'foto' %}">
-              <button class="btn btn-primary rounded-pill">
-                <span class="text-white">Tomar foto</span>
-              </button>
-            </a>
-          </li>
-        </ul>
-      </div>
+      <ul class="navbar-nav align-items-center ms-auto">
+        <li class="nav-item">
+          <a href="{% url 'crearPersona' %" class="btn btn-primary rounded-pill nav-link">
+            <span class="text-white">
+              <i class="bi bi-house"></i>
+              Inicio
+            </span>
+          </a>
+        </li>
+      </ul>
     </div>
   </nav>
 
@@ -101,18 +78,18 @@
 
           <ul class="dropdown-menu" aria-labelledby="exportar">
             <li>
-              <a class="dropdown-item" download="datos" href="#" onclick="downloadDocument(event, 'excel')">
+              <a class="dropdown-item" download="datos.xlsx" href="#" onclick="downloadDocument(event, 'xls')">
                 Excel file
               </a>
             </li>
             <li>
-              <a class="dropdown-item" download="datos" href="#" onclick="downloadDocument(event, 'xls')">
+              <a class="dropdown-item" download="datos.xls" href="#" onclick="downloadDocument(event, 'excel')">
                 XLS File
               </a>
             </li>
             <li>
-              <a class="dropdown-item" download="datos" href="#" onclick="downloadDocument(event, 'csv')">
-                CVS File
+              <a class="dropdown-item" download="datos.csv" href="#" onclick="downloadDocument(event, 'csv')">
+                CSV File
               </a>
             </li>
           </ul>
@@ -165,6 +142,21 @@
 
   <!-- Notiflix -->
   <script src="https://cdn.jsdelivr.net/npm/notiflix@3.2.2/dist/notiflix-aio-3.2.2.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.min.js"
+    integrity="sha512-W/mRQs9ZSFpF14X/4aRgQss7+HRsVXsph+Y6DGLeqIqK8IpO+rQz0ISUEXkTeeKF7tivoGv+Ru7SpocS/1qahg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"
+    integrity="sha512-csNcFYJniKjJxRWRV1R7fvnXrycHP6qDR21mgz1ZP55xY5d+aHLfo9/FcGDQLfn2IfngbAHd8LdfsagcCqgTcQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.2.0/js/tableexport.min.js"
+    integrity="sha512-XmZS54be9JGMZjf+zk61JZaLZyjTRgs41JLSmx5QlIP5F+sSGIyzD2eJyxD4K6kGGr7AsVhaitzZ2WTfzpsQzg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
 
   <script>
     window.personaId = "{{ persona.id }}";
