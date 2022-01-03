@@ -23,12 +23,21 @@
 
       <ul class="navbar-nav align-items-center ms-auto">
         <li class="nav-item">
-          <a href="{% url 'crearPersona' %" class="btn btn-primary rounded-pill nav-link">
+          <a href="{% url 'crearPersona' %" class="btn btn-primary rounded-pill nav-link py-1 px-3">
             <span class="text-white">
               <i class="bi bi-house"></i>
               Inicio
             </span>
           </a>
+
+        <li class="nav-item">
+          <a class="btn btn-secondary rounded-pill nav-link py-1 px-3 ms-2" onclick="onShowHelp()">
+            <span class="text-white">
+              <i class="bi bi-question-circle"></i>
+              Ayuda
+            </span>
+          </a>
+        </li>
         </li>
       </ul>
     </div>
@@ -130,6 +139,43 @@
     </div>
   </main>
 
+  <!-- Modal -->
+  <div class="modal fade" id="helpModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h5>
+            Ayuda:
+          </h5>
+
+          <p>
+            El test captura automáticamente una foto por cada segundo de los 12 que transcurre en la pregunta, es decir
+            se tiene 12 fotos por cada pregunta, esa foto es analizada y se extrae la emoción que se esta reflejando en
+            el momento de la captura.
+            <br><br>
+            La tabla muestra el identificador de la foto, la emoción, el tiempo en el cual fue capturado, la
+            calificación que se le dio al producto y el ultimo campo que es opcional para que pueda verificar si es
+            correcto la interpretación de la emoción que se muestra con lo que sintió en ese momento.
+            Si desea guardar estos resultados, puede descargarlos en formato xlsx, xls o csv dando click en el botón
+            Exportar.
+            <br><br>
+            ¡Muchas gracias por participar!
+          </p>
+
+          <div class="row">
+            <div class="col-12 d-grid">
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                <span class="text-white">
+                  Seguir
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/excellentexport@3.4.3/dist/excellentexport.min.js">
   </script>
 
@@ -143,23 +189,16 @@
   <!-- Notiflix -->
   <script src="https://cdn.jsdelivr.net/npm/notiflix@3.2.2/dist/notiflix-aio-3.2.2.min.js"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.min.js"
-    integrity="sha512-W/mRQs9ZSFpF14X/4aRgQss7+HRsVXsph+Y6DGLeqIqK8IpO+rQz0ISUEXkTeeKF7tivoGv+Ru7SpocS/1qahg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer">
-    </script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"
-    integrity="sha512-csNcFYJniKjJxRWRV1R7fvnXrycHP6qDR21mgz1ZP55xY5d+aHLfo9/FcGDQLfn2IfngbAHd8LdfsagcCqgTcQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer">
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.2.0/js/tableexport.min.js"
-    integrity="sha512-XmZS54be9JGMZjf+zk61JZaLZyjTRgs41JLSmx5QlIP5F+sSGIyzD2eJyxD4K6kGGr7AsVhaitzZ2WTfzpsQzg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer">
-    </script>
-
   <script>
     window.personaId = "{{ persona.id }}";
+
+    function onShowHelp() {
+      new bootstrap.Modal(document.getElementById('helpModal'), {
+        keyboard: false
+      }).show();
+    }
+
+    onShowHelp();
   </script>
 
   <script src="{% static 'js/resultado.js' %}"></script>
