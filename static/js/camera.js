@@ -124,7 +124,8 @@ function onStart() {
   let counter = 0;
   const timerInit = new Date();
   let activeQuestion = 0;
-  startBtn.disabled = true;
+  startBtn.remove();
+  const questionNumber = document.querySelector('#questionNumber');
 
   const clock = setInterval(() => {
     if (activeQuestion < 5) {
@@ -141,6 +142,9 @@ function onStart() {
       if (activeQuestion === 5) {
         return;
       }
+
+      questionNumber.parentElement.style.display = 'block';
+      questionNumber.innerHTML = activeQuestion + 1;
 
       //
       counter++;
