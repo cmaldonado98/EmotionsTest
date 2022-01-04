@@ -38,13 +38,21 @@
   </nav>
 
   <main class="container" style="min-height: calc(100vh - (56px + 59px));">
-    <section class="py-4 text-end">
-      <h1 class="text-black">#{{valor}}</h1>
-      <h2 class="text-black">Producto: {{producto}}</h2>      
-      <span class="text-muted fs-5">
-        Numero de test
-      </span>
-    </section>
+    <div class="row my-4">
+      <div class="col-6">
+        <h1 class="text-black">{{producto}}</h1>   
+        <span class="text-muted fs-5">
+          Producto
+        </span>
+      </div>
+
+      <div class="col-6 text-end">
+        <h1 class="text-black">#{{valor}}</h1>     
+        <span class="text-muted fs-5">
+          Numero de test
+        </span>
+      </div>
+    </div>
 
     <section class="row justify-content-between mb-5">
       <div class="col-lg-3 order-last order-lg-first">

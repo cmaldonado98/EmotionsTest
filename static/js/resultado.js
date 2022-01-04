@@ -100,6 +100,7 @@ function render(obj) {
             <tr style="--bs-table-striped-bg: rgba(var(--bs-primary-rgb), .25);">
                 <td>${x.testId}</td>
                 <td>${x.idImg}</td>
+                <td>${x.producto}</td>
                 <td>${x.resultado}</td>
                 <td>${x.tiempo}</td>
                 <td>${x.calificacion}</td>

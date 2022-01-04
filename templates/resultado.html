@@ -29,15 +29,24 @@
               Inicio
             </span>
           </a>
+        </li>
 
         <li class="nav-item">
-          <a class="btn btn-secondary rounded-pill nav-link py-1 px-3 ms-2" onclick="onShowHelp()">
+          <a class="btn btn-secondary rounded-pill nav-link py-1 px-3 mx-2" onclick="onShowHelp()">
             <span class="text-white">
               <i class="bi bi-question-circle"></i>
               Ayuda
             </span>
           </a>
         </li>
+
+        <li class="nav-item">
+          <a href="{% url 'dashboard' %}" class="btn btn-secondary rounded-pill nav-link py-1 px-3">
+            <span class="text-white">
+              <i class="bi bi-pie-chart"></i>
+              Dashboard
+            </span>
+          </a>
         </li>
       </ul>
     </div>
@@ -115,6 +124,7 @@
                 <tr class="border-bottom border-primary">
                   <th># Test</th>
                   <th>Cod. Imagen</th>
+                  <th>Producto</th>
                   <th>Resultado</th>
                   <th>Tiempo</th>
                   <th>Calificación</th>

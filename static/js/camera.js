@@ -30,7 +30,9 @@ function setTimer(count, progress) {
 // Camera logic
 //
 const numTest = window.valor;
+const producto = window.producto;
 delete window.valor;
+delete window.producto;
 
 const urlApi = "https://api.superfoodproteins.com";
 const questions = [
@@ -98,7 +100,8 @@ async function sendData(img, tiempo, pregunta, calificacion) {
       testId: numTest.toString(),
       tiempo,
       pregunta: 'Pregunta ' + pregunta,
-      calificacion
+      calificacion,
+      producto
     }),
     headers: {
       "Content-type": "application/json",
