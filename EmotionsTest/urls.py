@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from aplicaciones.camera import views
-from aplicaciones.persona.views import crearPersona
+from aplicaciones.persona.views import crearPersona, dashboard
 from aplicaciones.resultado.views import resultado
 
 urlpatterns = [
@@ -24,4 +24,5 @@ urlpatterns = [
     path("camera/", views.foto, name="foto"),
     path("", crearPersona, name="crearPersona"),
     path("resultado/<int:testId>/", resultado, name="resultado"),
+    path("dashboard/", dashboard, name="dashboard"),
 ]

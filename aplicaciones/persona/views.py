@@ -18,7 +18,12 @@ def crearPersona(request):
         if form.is_valid():
             
             form.save()
-            id = form.instance.pk            
-            request.session['valor'] = id            
+            id = form.instance.pk 
+            producto = form.instance.producto           
+            request.session['valor'] = id
+            request.session['producto'] = producto            
             return redirect('foto')
     return render(request, 'personaForm.html', contexto)
+
+def dashboard(request):	
+	return render(request, 'dashboard.html')

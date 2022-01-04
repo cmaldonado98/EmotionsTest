@@ -40,6 +40,7 @@
   <main class="container" style="min-height: calc(100vh - (56px + 59px));">
     <section class="py-4 text-end">
       <h1 class="text-black">#{{valor}}</h1>
+      <h2 class="text-black">Producto: {{producto}}</h2>      
       <span class="text-muted fs-5">
         Numero de test
       </span>
@@ -177,6 +178,7 @@
 
   <script>
     window.valor = "{{ valor }}";
+    window.producto = "{{ producto }}";
 
     // Show initial modal
     new bootstrap.Modal(document.getElementById('modal'), {

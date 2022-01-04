@@ -7,4 +7,5 @@ from django.http.response import StreamingHttpResponse
 
 def foto(request):	
 	id = request.session['valor']
-	return render(request, 'camera.html',{'valor':id})
+	producto = request.session['producto']
+	return render(request, 'camera.html',{'valor':id, 'producto' : producto})

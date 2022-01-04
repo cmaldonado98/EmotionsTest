@@ -9,4 +9,6 @@ class Persona(models.Model):
     genero = (('Masculino',"Masculino"),('Femenino',"Femenino"))
     sexo = models.CharField(max_length= 20, choices= genero, default="Masculino")
     edad = models.PositiveSmallIntegerField(default=1)
+    listaProductos = (('Hamburguesa',"Hamburguesa"),('Producto2',"Producto2"))
+    producto = models.CharField(max_length= 30, choices= listaProductos, default="Hamburguesa")
     
