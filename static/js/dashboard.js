@@ -30,21 +30,6 @@ function setupChart(name, type, labels, data, percent = false) {
             plugins: {
                 legend: {
                     position: 'bottom'
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function (context) {
-                            // return context.raw + '%';
-                            const label = context.label;
-                            let value = context.raw;
-
-                            if (percent) {
-                                value += '%';
-                            }
-
-                            return `${label}: ${value}`;
-                        }
-                    }
                 }
             }
         }
@@ -68,18 +53,18 @@ function render(data) {
 
     data.forEach(x => {
         const emotionKey = x.resultado.split(' ')[0];
-        const emotionValue = x.resultado.split(' ')[2].substring(0, 2);
 
         if (!emotions[emotionKey]) {
-            emotions[emotionKey] = parseInt(emotionValue, 10);
+            emotions[emotionKey] = 1;
+        } else {
+            emotions[emotionKey]++;
         }
 
         if (!califications[x.calificacion]) {
             califications[x.calificacion] = 1;
-            return;
+        } else {
+            califications[x.calificacion]++;
         }
-
-        califications[x.calificacion]++;
     });
 
     const calificationsLabel = Object.entries(califications).map(x => x[0]);
@@ -88,10 +73,7 @@ function render(data) {
     setupChart('calificationChart', 'doughnut', calificationsLabel, calificationsData);
 
     const emotionsLabel = Object.entries(emotions).map(x => x[0]);
-    emotionsLabel.push('Otros');
-
-    const emotionsData = Object.entries(emotions).map(x => parseInt(x[1], 10));
-    emotionsData.push(100 - emotionsData[0]);
+    const emotionsData = Object.entries(emotions).map(x => x[1]);
 
     setupChart('emotionChart', 'pie', emotionsLabel, emotionsData, true);
 }
