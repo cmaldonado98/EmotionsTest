@@ -118,6 +118,36 @@ async function sendData(params) {
     return await response.json();
 }
 
+function exportPdf() {
+    Notiflix.Loading.hourglass({
+        backgroundColor: 'rgb(255, 255, 255)',
+    });
+
+    setTimeout(() => {
+        const pdf = new jsPDF('p', 'pt', 'a4');
+        const chartContainer = document.querySelector('#exportChart');
+        const charts = chartContainer.querySelectorAll('.col-lg-4');
+        const title = document.createElement('h1');
+        title.innerText = 'Dashboard';
+        title.className = 'text-center my-5';
+        chartContainer.insertBefore(title, charts.item(0));
+    
+        charts.forEach(x => {
+            x.className = 'col-6 text-center d-flex flex-column align-items-center';
+        });
+    
+        pdf.addHTML(chartContainer, function () {
+            title.remove();
+            charts.forEach(x => {
+                x.className = 'col-lg-4 col-md-6';
+            });
+    
+            setTimeout(() => Notiflix.Loading.remove(), 1000);
+            pdf.save('Dashboard.pdf');
+        });
+    }, 1000);
+}
+
 window.onload = () => {
     onSelect();
 }
