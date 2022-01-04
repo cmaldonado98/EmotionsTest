@@ -51,7 +51,9 @@ function setupChart(name, type, labels, data, percent = false) {
     };
 
     const container = document.getElementById(name + 'Container');
-    container.innerHTML = '';
+    container.innerHTML = name === 'emotionChart'
+        ? '<h3 class="text-center my-4">Emociones</h3>'
+        : '<h3 class="text-center my-4">Calificaciones</h3>';
     const canvas = document.createElement('canvas');
     canvas.id = name;
     container.appendChild(canvas);
