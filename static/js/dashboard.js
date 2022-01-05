@@ -29,7 +29,18 @@ function setupChart(name, type, labels, data, percent = false) {
         options: {
             plugins: {
                 legend: {
-                    position: 'bottom'
+                    position: 'bottom',
+                    labels: {
+                        filter: (legendItem, data) => {
+                            const label = legendItem.text;
+                            const labelIndex = data.labels.findIndex(labelName => labelName === label);
+                            const qtd = data.datasets[0].data[labelIndex];
+                            
+                            legendItem.text = `${qtd} ${legendItem.text}`;
+                            
+                            return true;
+                          }
+                    }
                 }
             }
         }
@@ -43,7 +54,7 @@ function setupChart(name, type, labels, data, percent = false) {
     canvas.id = name;
     container.appendChild(canvas);
 
-    return new Chart(document.getElementById(name), config);
+    new Chart(document.getElementById(name), config);
 }
 
 
@@ -131,15 +142,17 @@ function exportPdf() {
         title.innerText = 'Dashboard';
         title.className = 'text-center my-5';
         chartContainer.insertBefore(title, charts.item(0));
-    
+
         charts.forEach(x => {
-            x.className = 'col-6 text-center d-flex flex-column align-items-center';
+            x.className = 'col-md-6 col-10 text-center d-flex flex-column align-items-center';
         });
-    
-        pdf.addHTML(chartContainer, function () {
+
+        const offset = window.innerWidth > 575 ? 0 : 150;
+
+        pdf.addHTML(chartContainer, offset, 0, function () {
             title.remove();
             charts.forEach(x => {
-                x.className = 'col-lg-4 col-md-6';
+                x.className = 'col-lg-4 col-md-6 col-10';
             });
     
             setTimeout(() => Notiflix.Loading.remove(), 1000);
