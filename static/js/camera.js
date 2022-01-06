@@ -3,6 +3,10 @@ Notiflix.Loading.hourglass({
   backgroundColor: 'rgb(255, 255, 255)',
 });
 
+if (!sessionStorage.getItem('session')) {
+  location.replace('/');
+}
+
 //
 // Timer
 //

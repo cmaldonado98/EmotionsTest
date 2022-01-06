@@ -4,6 +4,10 @@ Notiflix.Loading.hourglass({
     backgroundColor: 'rgb(255, 255, 255)',
 });
 
+if (!sessionStorage.getItem('session')) {
+    location.replace('/');
+}
+
 const urlApi = "https://api.superfoodproteins.com";
 
 function setupChart(name, type, labels, data, percent = false) {

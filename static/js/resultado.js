@@ -2,6 +2,10 @@ Notiflix.Loading.hourglass({
     backgroundColor: 'rgb(255, 255, 255)',
 });
 
+if (!sessionStorage.getItem('session')) {
+    location.replace('/');
+}
+
 const states = {
     'CALMADO': {
         'Muy malo': '#dc3545',
