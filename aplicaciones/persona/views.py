@@ -9,7 +9,10 @@ from aplicaciones.persona.models import Persona
 
 def crearPersona(request):
     if request.method == "GET":
-        del request.session['resultado']
+        try:
+            del request.session['resultado']
+        except:
+            print()
         form = PersonaForm()
         contexto = {
             'form':form
@@ -26,8 +29,8 @@ def crearPersona(request):
             producto = form.instance.producto           
             request.session['valor'] = id
             request.session['producto'] = producto
-
             request.session['camera'] = 'login'
+            
             # username = form.instance.nombre
             # password = str(form.instance.id)
             # # user = authenticate(request, username=username, password=password)
