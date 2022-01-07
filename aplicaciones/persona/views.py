@@ -33,5 +33,9 @@ def crearPersona(request):
             return redirect('foto')
     return render(request, 'personaForm.html', contexto)
 
-def dashboard(request):	
-	return render(request, 'dashboard.html')
+def dashboard(request):
+    try:
+        del request.session['camera']
+    except:
+        print()	
+    return render(request, 'dashboard.html')
