@@ -21,34 +21,42 @@
         <img src="{% static 'img/LOGO_PROTEINS.png' %}" alt="Logo" style="width: 7rem; height: 3.5rem;">
       </a>
 
-      <ul class="navbar-nav align-items-center ms-auto">
-        <li class="nav-item">
-          <a href="{% url 'crearPersona' %}" class="btn btn-primary rounded-pill nav-link py-1 px-3">
-            <span class="text-white">
-              <i class="bi bi-house"></i>
-              Inicio
-            </span>
-          </a>
-        </li>
+      <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <i class="bi bi-grid fs-3"></i>
+      </button>
 
-        <li class="nav-item">
-          <a class="btn btn-secondary rounded-pill nav-link py-1 px-3 mx-2" onclick="onShowHelp()">
-            <span class="text-white">
-              <i class="bi bi-question-circle"></i>
-              Ayuda
-            </span>
-          </a>
-        </li>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav align-items-center ms-auto">
+          <li class="nav-item">
+            <a href="{% url 'crearPersona' %}" class="btn btn-primary rounded-pill nav-link py-1 px-3 mt-2 mt-lg-0">
+              <span class="text-white">
+                <i class="bi bi-house"></i>
+                Inicio
+              </span>
+            </a>
+          </li>
 
-        <li class="nav-item">
-          <a href="{% url 'dashboard' %}" class="btn btn-secondary rounded-pill nav-link py-1 px-3">
-            <span class="text-white">
-              <i class="bi bi-pie-chart"></i>
-              Dashboard
-            </span>
-          </a>
-        </li>
-      </ul>
+          <li class="nav-item">
+            <a class="btn btn-secondary rounded-pill nav-link py-1 px-3 mx-2 mt-2 mt-lg-0" onclick="onShowHelp()">
+              <span class="text-white">
+                <i class="bi bi-question-circle"></i>
+                Ayuda
+              </span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary rounded-pill nav-link py-1 px-3 my-2 my-lg-0">
+              <span class="text-white">
+                <i class="bi bi-pie-chart"></i>
+                Dashboard
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
 

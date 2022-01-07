@@ -6,13 +6,7 @@ Notiflix.Loading.hourglass({
 
 const urlApi = "https://api.superfoodproteins.com";
 
-function setupChart(name, type, labels, data, percent = false) {
-    const opts = {};
-
-    if (type === 'bar') {
-
-    }
-
+function setupChart(name, type, labels, data) {
     const config = {
         type,
         data: {
@@ -33,7 +27,6 @@ function setupChart(name, type, labels, data, percent = false) {
             }]
         },
         options: {
-            ...opts,
             plugins: {
                 legend: {
                     position: 'bottom',
@@ -65,6 +58,16 @@ function setupChart(name, type, labels, data, percent = false) {
     }
 
     container.appendChild(canvas);
+
+    if (type === 'bar') {
+        const total = data.reduce((prev, acc) => prev + acc, 0);
+
+        container.innerHTML += `
+            <span class="badge bg-secondary fs-6">
+                Total de calificaciones: ${total}
+            </span>
+        `;
+    }
 
     new Chart(document.getElementById(name), config);
 }
@@ -98,7 +101,7 @@ function render(data) {
     const emotionsLabel = Object.entries(emotions).map(x => x[0]);
     const emotionsData = Object.entries(emotions).map(x => x[1]);
 
-    setupChart('emotionChart', 'pie', emotionsLabel, emotionsData, true);
+    setupChart('emotionChart', 'pie', emotionsLabel, emotionsData);
 }
 
 const productoSelect = document.querySelector('#producto');
@@ -164,7 +167,7 @@ function exportPdf() {
         pdf.addHTML(chartContainer, offset, 0, function () {
             title.remove();
             charts.forEach(x => {
-                x.className = 'col-lg-4 col-md-6 col-12';
+                x.className = 'col-lg-4 col-md-6 col-12 text-center';
             });
 
             setTimeout(() => Notiflix.Loading.remove(), 1000);

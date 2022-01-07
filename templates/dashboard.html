@@ -24,23 +24,40 @@
         <img src="{% static 'img/LOGO_PROTEINS.png' %}" alt="Logo" style="width: 7rem; height: 3.5rem;">
       </a>
 
-      <ul class="navbar-nav align-items-center ms-auto">
-        <li class="nav-item">
-          <a href="{% url 'crearPersona' %}" class="btn btn-primary rounded-pill nav-link py-1 px-3">
-            <span class="text-white">
-              <i class="bi bi-house"></i>
-              Inicio
-            </span>
-          </a>
-        </li>
-      </ul>
+      <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <i class="bi bi-grid fs-3"></i>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav align-items-center ms-auto">
+          <li class="nav-item">
+            <a href="{% url 'crearPersona' %}" class="btn btn-primary rounded-pill nav-link py-1 px-3">
+              <span class="text-white">
+                <i class="bi bi-house"></i>
+                Inicio
+              </span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="javascript:history.go(-1)" class="btn btn-secondary rounded-pill nav-link py-1 px-3 ms-2 my-2 my-lg-0">
+              <span class="text-white">
+                <i class="bi bi-clipboard"></i>
+                Resultados
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
 
   <main class="container" style="min-height: calc(100vh - (56px + 59px));">
     <div class="row my-4">
       <div class="col-6">
-        <h1 class="text-black">Dashboard</h1>   
+        <h1 class="text-black">Dashboard</h1>
       </div>
 
       <div class="col-6 align-self-center text-end">
@@ -52,34 +69,34 @@
     </div>
 
     <section class="row">
-        <div class="col-lg-3 col-6">
-            <label class="form-label">Producto</label>
-            <select class="form-control" id="producto">
-                <option value="Hamburguesa" selected>Hamburguesa</option>
-                <option value="Producto2">Producto 2</option>
-            </select>
-        </div>
-        <div class="col-lg-3 col-6">
-            <label class="form-label">Pregunta</label>
-            <select class="form-control" id="pregunta">
-                <option value="null" selected>Todos</option>
-                <option value="Pregunta 1">Pregunta 1</option>
-                <option value="Pregunta 2">Pregunta 2</option>
-                <option value="Pregunta 3">Pregunta 3</option>
-                <option value="Pregunta 4">Pregunta 4</option>
-                <option value="Pregunta 5">Pregunta 5</option>
-            </select>
-        </div>
+      <div class="col-lg-3 col-6">
+        <label class="form-label">Producto</label>
+        <select class="form-control" id="producto">
+          <option value="Hamburguesa" selected>Hamburguesa</option>
+          <option value="Producto2">Producto 2</option>
+        </select>
+      </div>
+      <div class="col-lg-3 col-6">
+        <label class="form-label">Pregunta</label>
+        <select class="form-control" id="pregunta">
+          <option value="null" selected>Todos</option>
+          <option value="Pregunta 1">Pregunta 1</option>
+          <option value="Pregunta 2">Pregunta 2</option>
+          <option value="Pregunta 3">Pregunta 3</option>
+          <option value="Pregunta 4">Pregunta 4</option>
+          <option value="Pregunta 5">Pregunta 5</option>
+        </select>
+      </div>
     </section>
 
     <div class="row bg-white justify-content-center justify-content-md-start" id="exportChart">
-        <div class="col-lg-4 col-md-6 col-10" id="emotionChartContainer">
-            <!-- <canvas id="emotionChart"></canvas> -->
-        </div>
+      <div class="col-lg-4 col-md-6 col-10 text-center" id="emotionChartContainer">
+        <!-- <canvas id="emotionChart"></canvas> -->
+      </div>
 
-        <div class="col-lg-6 col-md-6 col-12 my-4 my-md-0" id="calificationChartContainer">
-            <!-- <canvas id="calificationChart"></canvas> -->
-        </div>
+      <div class="col-lg-6 col-md-6 col-12 my-4 my-md-0 text-center" id="calificationChartContainer">
+        <!-- <canvas id="calificationChart"></canvas> -->
+      </div>
     </div>
   </main>
 
