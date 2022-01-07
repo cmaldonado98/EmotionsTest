@@ -4,13 +4,15 @@ Notiflix.Loading.hourglass({
     backgroundColor: 'rgb(255, 255, 255)',
 });
 
-if (!sessionStorage.getItem('session')) {
-    location.replace('/');
-}
-
 const urlApi = "https://api.superfoodproteins.com";
 
 function setupChart(name, type, labels, data, percent = false) {
+    const opts = {};
+
+    if (type === 'bar') {
+
+    }
+
     const config = {
         type,
         data: {
@@ -31,19 +33,20 @@ function setupChart(name, type, labels, data, percent = false) {
             }]
         },
         options: {
+            ...opts,
             plugins: {
                 legend: {
                     position: 'bottom',
-                    labels: {
+                    labels: type === 'pie' && {
                         filter: (legendItem, data) => {
                             const label = legendItem.text;
                             const labelIndex = data.labels.findIndex(labelName => labelName === label);
                             const qtd = data.datasets[0].data[labelIndex];
-                            
+
                             legendItem.text = `${qtd} ${legendItem.text}`;
-                            
+
                             return true;
-                          }
+                        }
                     }
                 }
             }
@@ -56,6 +59,11 @@ function setupChart(name, type, labels, data, percent = false) {
         : '<h3 class="text-center my-4">Calificaciones</h3>';
     const canvas = document.createElement('canvas');
     canvas.id = name;
+
+    if (window.innerWidth < 576) {
+        canvas.height = '250';
+    }
+
     container.appendChild(canvas);
 
     new Chart(document.getElementById(name), config);
@@ -85,7 +93,7 @@ function render(data) {
     const calificationsLabel = Object.entries(califications).map(x => x[0]);
     const calificationsData = Object.entries(califications).map(x => x[1]);
 
-    setupChart('calificationChart', 'doughnut', calificationsLabel, calificationsData);
+    setupChart('calificationChart', 'bar', calificationsLabel, calificationsData);
 
     const emotionsLabel = Object.entries(emotions).map(x => x[0]);
     const emotionsData = Object.entries(emotions).map(x => x[1]);
@@ -148,7 +156,7 @@ function exportPdf() {
         chartContainer.insertBefore(title, charts.item(0));
 
         charts.forEach(x => {
-            x.className = 'col-md-6 col-10 text-center d-flex flex-column align-items-center';
+            x.className = 'col-md-6 col-12 text-center d-flex flex-column align-items-center';
         });
 
         const offset = window.innerWidth > 575 ? 0 : 150;
@@ -156,9 +164,9 @@ function exportPdf() {
         pdf.addHTML(chartContainer, offset, 0, function () {
             title.remove();
             charts.forEach(x => {
-                x.className = 'col-lg-4 col-md-6 col-10';
+                x.className = 'col-lg-4 col-md-6 col-12';
             });
-    
+
             setTimeout(() => Notiflix.Loading.remove(), 1000);
             pdf.save('Dashboard.pdf');
         });
