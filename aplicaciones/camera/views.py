@@ -1,11 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http.response import StreamingHttpResponse
-
-# Create your views here.
-
+from django.core.exceptions import PermissionDenied
+from django.contrib.auth import authenticate, login
+from aplicaciones.persona.models import Persona
 
 
 def foto(request):	
-	id = request.session['valor']
-	producto = request.session['producto']
-	return render(request, 'camera.html',{'valor':id, 'producto' : producto})
+	if request.session.get('camera', 'logout') == 'login':
+		id = request.session['valor']
+		producto = request.session['producto']
+		request.session['resultado'] = 'login'
+		return render(request, 'camera.html',{'valor':id, 'producto' : producto})
+	else:
+		return redirect('crearPersona')
