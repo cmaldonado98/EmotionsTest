@@ -111,6 +111,20 @@ function render(obj) {
     });
 }
 
+function sortByTime(data) {
+    const parseTime = (time) => {
+        let [minutes, seconds] = time.split(':');
+        return [parseInt(minutes, 10), parseInt(seconds, 10)];
+    }
+
+    return data.sort((a, b) => {
+        const [aMinutes, aSeconds] = parseTime(a.tiempo);
+        const [bMinutes, bSeconds] = parseTime(b.tiempo);
+
+        return aMinutes - bMinutes || aSeconds - bSeconds;
+    });
+}
+
 function getData() {
     Notiflix.Loading.hourglass({
         backgroundColor: 'rgb(255, 255, 255)',
@@ -123,6 +137,7 @@ function getData() {
         },
     }).then((response) => response.json())
         .then((datos) => {
+            datos = sortByTime(datos);
             render(datos);
         })
         .finally(() => Notiflix.Loading.remove());
