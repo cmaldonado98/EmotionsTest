@@ -29,12 +29,7 @@ def crearPersona(request):
             producto = form.instance.producto           
             request.session['valor'] = id
             request.session['producto'] = producto
-            request.session['camera'] = 'login'
-            
-            # username = form.instance.nombre
-            # password = str(form.instance.id)
-            # # user = authenticate(request, username=username, password=password)
-            # login(request, user)                
+            request.session['camera'] = 'login'                
             return redirect('foto')
     return render(request, 'personaForm.html', contexto)
 
