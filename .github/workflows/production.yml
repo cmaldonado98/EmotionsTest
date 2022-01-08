@@ -1,9 +1,10 @@
 name: Build Django-Project Emotions
 on:
   push:
-  pull_request:
     branches:
       - master
+  pull_request:
+    types: [opened, synchronize, reopened]
 jobs:
   sonarcloud:
     name: SonarCloud
