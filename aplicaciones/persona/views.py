@@ -7,11 +7,12 @@ from django.contrib.auth import authenticate, login
 from aplicaciones.persona.models import Persona
 
 
-def crearPersona(request):
+def crear_persona(request):
     if request.method == "GET":
         try:
             del request.session['resultado']
-        except:
+            del request.session['camera']
+        except Exception:
             print()
         form = PersonaForm()
         contexto = {
@@ -25,9 +26,9 @@ def crearPersona(request):
         if form.is_valid():
             
             form.save()
-            testId = form.instance.pk 
+            test_id = form.instance.pk 
             producto = form.instance.producto           
-            request.session['valor'] = testId
+            request.session['valor'] = test_id
             request.session['producto'] = producto
             request.session['camera'] = 'login'                
             return redirect('foto')
@@ -36,6 +37,6 @@ def crearPersona(request):
 def dashboard(request):
     try:
         del request.session['camera']
-    except:
+    except Exception:
         print()	
     return render(request, 'dashboard.html')

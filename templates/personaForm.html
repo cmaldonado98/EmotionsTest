@@ -1,7 +1,6 @@
 {% load static %} {% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
-<html>
   <head>
     <meta charset="utf-8" />
     <title>Emociones</title>
@@ -129,23 +128,19 @@
           <div class="formbg-outer">
             <div class="formbg">
               <div class="formbg-inner padding-horizontal--48">
-                <span class="padding-bottom--15">Ingresa tus datos</span>
+                <span class="padding-bottom--15">Ingresa tus datos en el formulario</span>
                 <form id="stripe-login" method="post">
                   {% csrf_token %}
                   <div class="field padding-bottom--24">
                     {{form.producto|as_crispy_field}}
                   </div>                  
                   <div class="field padding-bottom--24">
-                    <!-- <label for="label">{{form.nombre.label}}</label>
-                  <input type="label" name="nombre"> -->
                     {{form.nombre|as_crispy_field}}
                   </div>
                   <div class="field padding-bottom--24">
                     {{form.apellido|as_crispy_field}}
                   </div>
                   <div class="field padding-bottom--24">
-                    <!-- <label for="label">{{form.apellido.label}}</label>                  
-                  <input type="label" name="apellido"> -->
                     {{form.correo|as_crispy_field}}
                   </div>
                   <div class="field padding-bottom--24">
@@ -161,13 +156,13 @@
               </div>
             </div>
             <div class="footer-link padding-top--24">
-              <span>Don't have an account? <a href="">Sign up</a></span>
+              <span>¿Quieres ver nuestros resultados? <a href="{% url 'dashboard' %}">Dashboard</a></span>
               <div
                 class="listing padding-top--24 padding-bottom--24 flex-flex center-center"
               >
-                <span><a href="#">© Stackfindover</a></span>
-                <span><a href="#">Contact</a></span>
-                <span><a href="#">Privacy & terms</a></span>
+                <span><a href="#">© Proteins</a></span>
+                <span><a href="#">UDLA</a></span>
+                <span><a href="#">Software</a></span>
               </div>
             </div>
           </div>
