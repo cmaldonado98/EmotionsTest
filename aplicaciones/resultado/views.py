@@ -2,7 +2,9 @@ from django.shortcuts import redirect, render
 from aplicaciones.persona.forms import PersonaForm
 from aplicaciones.persona.models import Persona
 from django.core.exceptions import PermissionDenied
+from django.views.decorators.http import require_http_methods
 
+@require_http_methods(["GET"])
 def resultado(request, test_id):
 	try:
 		del request.session['camera']

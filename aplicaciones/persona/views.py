@@ -5,8 +5,9 @@ from .forms import PersonaForm
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth import authenticate, login
 from aplicaciones.persona.models import Persona
+from django.views.decorators.http import require_http_methods
 
-
+@require_http_methods(["GET", "POST"])
 def crear_persona(request):
     if request.method == "GET":
         try:
@@ -34,6 +35,7 @@ def crear_persona(request):
             return redirect('foto')
     return render(request, 'personaForm.html', contexto)
 
+@require_http_methods(["GET"])
 def dashboard(request):
     try:
         del request.session['camera']
