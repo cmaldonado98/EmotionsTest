@@ -33,3 +33,18 @@ jobs:
       - name: docker push
         run: |
           docker push cmaldonado98/django-project:${GITHUB_SHA}
+          
+      - name: AWS SSM Send-Command
+        uses: peterkimzz/aws-ssm-send-command@master
+        id: ssm
+        with:
+          aws-region: ${{ secrets.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          instance-ids: ${{ secrets.INSTANCE_ID }}
+
+          working-directory: /home/ubuntu/
+          command: |
+           sudo su
+           docker pull cmaldonado98/django-project:${GITHUB_SHA}
+          
