@@ -25,9 +25,9 @@ def crearPersona(request):
         if form.is_valid():
             
             form.save()
-            id = form.instance.pk 
+            testId = form.instance.pk 
             producto = form.instance.producto           
-            request.session['valor'] = id
+            request.session['valor'] = testId
             request.session['producto'] = producto
             request.session['camera'] = 'login'                
             return redirect('foto')

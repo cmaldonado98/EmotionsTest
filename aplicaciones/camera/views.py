@@ -7,9 +7,9 @@ from aplicaciones.persona.models import Persona
 
 def foto(request):	
 	if request.session.get('camera', 'logout') == 'login':
-		id = request.session['valor']
+		testId = request.session['valor']
 		producto = request.session['producto']
 		request.session['resultado'] = 'login'
-		return render(request, 'camera.html',{'valor':id, 'producto' : producto})
+		return render(request, 'camera.html',{'valor':testId, 'producto' : producto})
 	else:
 		return redirect('crearPersona')

@@ -24,7 +24,7 @@
       <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="collapse"
         data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
         aria-label="Toggle navigation">
-        <i class="bi bi-grid fs-3"></i>
+        <em class="bi bi-grid fs-3"></em>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -32,7 +32,7 @@
           <li class="nav-item">
             <a href="{% url 'crearPersona' %}" class="btn btn-primary rounded-pill nav-link py-1 px-3 mt-2 mt-lg-0">
               <span class="text-white">
-                <i class="bi bi-house"></i>
+                <em class="bi bi-house"></em>
                 Inicio
               </span>
             </a>
@@ -41,7 +41,7 @@
           <li class="nav-item">
             <a class="btn btn-secondary rounded-pill nav-link py-1 px-3 mx-2 mt-2 mt-lg-0" onclick="onShowHelp()">
               <span class="text-white">
-                <i class="bi bi-question-circle"></i>
+                <em class="bi bi-question-circle"></em>
                 Ayuda
               </span>
             </a>
@@ -50,7 +50,7 @@
           <li class="nav-item">
             <a href="{% url 'dashboard' %}" class="btn btn-secondary rounded-pill nav-link py-1 px-3 my-2 my-lg-0">
               <span class="text-white">
-                <i class="bi bi-pie-chart"></i>
+                <em class="bi bi-pie-chart"></em>
                 Dashboard
               </span>
             </a>
@@ -130,14 +130,14 @@
             <table class="table table-bordered border-primary table-striped text-center mb-0" id="tblData">
               <thead>
                 <tr class="border-bottom border-primary">
-                  <th># Test</th>
-                  <th>Cod. Imagen</th>
-                  <th>Producto</th>
-                  <th>Resultado</th>
-                  <th>Tiempo</th>
-                  <th>Calificación</th>
-                  <th>Pregunta</th>
-                  <th>Validar</th>
+                  <th scope="col"># Test</th>
+                  <th scope="col">Cod. Imagen</th>
+                  <th scope="col">Producto</th>
+                  <th scope="col">Resultado</th>
+                  <th scope="col">Tiempo</th>
+                  <th scope="col">Calificación</th>
+                  <th scope="col">Pregunta</th>
+                  <th scope="col">Validar</th>
                 </tr>
               </thead>
 

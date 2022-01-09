@@ -69,7 +69,11 @@ function setupChart(name, type, labels, data) {
         `;
     }
 
-    new Chart(document.getElementById(name), config);
+    try {
+        new new Chart(document.getElementById(name), config);
+    }catch(e){
+
+    }
 }
 
 
